@@ -24,7 +24,7 @@
 			<a href="${root }student/lecture" class="nav-link">학생 강의 평가 조회</a>
 		</div>
 		<div>
-			<a href="${root }student/stu_tt" class="nav-link">강의 시간표</a>
+			<a href="${root }student/classTimeTableInquiry" class="nav-link">강의 시간표</a>
 		</div>
 		<div>
 			<a href="${root }student/allGradeInquiry" class="nav-link">전체성적조회</a>
