@@ -15,6 +15,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.jonggak.mapper.GradeMapper;
 import com.jonggak.mapper.LectureMapper;
+import com.jonggak.mapper.TimeTableMapper;
 import com.jonggak.mapper.UserMapper;
  
 @EnableWebMvc
@@ -37,7 +38,7 @@ public class ServletAppContext implements WebMvcConfigurer {
 //	@Autowired
 //	private TopMenuService topMenuService;
 	
-	// Controller의 메서드가 반환하는 jsp의 이름 앞뒤에 경로와 확장자를 붙혀주도록 설정한다.
+	// Controller�쓽 硫붿꽌�뱶媛� 諛섑솚�븯�뒗 jsp�쓽 �씠由� �븵�뮘�뿉 寃쎈줈�� �솗�옣�옄瑜� 遺숉�二쇰룄濡� �꽕�젙�븳�떎.
 	@Override
 	public void configureViewResolvers(ViewResolverRegistry registry) {
 		// TODO Auto-generated method stub
@@ -45,7 +46,7 @@ public class ServletAppContext implements WebMvcConfigurer {
 		registry.jsp("/WEB-INF/views/", ".jsp");
 	}
 	
-	// 정적 파일의 경로를 매핑한다.
+	// �젙�쟻 �뙆�씪�쓽 寃쎈줈瑜� 留ㅽ븨�븳�떎.
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		// TODO Auto-generated method stub
@@ -53,7 +54,7 @@ public class ServletAppContext implements WebMvcConfigurer {
 		registry.addResourceHandler("/**").addResourceLocations("/resources/");
 	}
 	
-	// 데이터베이스 접속 정보를 관리하는 Bean
+	// �뜲�씠�꽣踰좎씠�뒪 �젒�냽 �젙蹂대�� 愿�由ы븯�뒗 Bean
 	@Bean
 	public BasicDataSource dataSource() {
 		BasicDataSource source = new BasicDataSource();
@@ -65,7 +66,7 @@ public class ServletAppContext implements WebMvcConfigurer {
 		return source;
 	}
 	
-	// 쿼리문과 접속 정보를 관리하는 객체
+	// 荑쇰━臾멸낵 �젒�냽 �젙蹂대�� 愿�由ы븯�뒗 媛앹껜
 	@Bean
 	public SqlSessionFactory factory(BasicDataSource source) throws Exception{
 		SqlSessionFactoryBean factoryBean = new SqlSessionFactoryBean();
@@ -74,7 +75,7 @@ public class ServletAppContext implements WebMvcConfigurer {
 		return factory;
 	}
 	
-	// Mapper Bean 생성
+	// Mapper Bean �깮�꽦
 	
 	@Bean
 	public MapperFactoryBean<GradeMapper> getGradeMapper(SqlSessionFactory factory) throws Exception {
@@ -93,6 +94,13 @@ public class ServletAppContext implements WebMvcConfigurer {
 	@Bean
 	public MapperFactoryBean<UserMapper> getUserMapper(SqlSessionFactory factory) throws Exception {
 		MapperFactoryBean<UserMapper> factoryBean = new MapperFactoryBean<UserMapper>(UserMapper.class);
+		factoryBean.setSqlSessionFactory(factory);
+		return factoryBean;
+	}
+	
+	@Bean
+	public MapperFactoryBean<TimeTableMapper> getTimeTableMapper(SqlSessionFactory factory) throws Exception {
+		MapperFactoryBean<TimeTableMapper> factoryBean = new MapperFactoryBean<TimeTableMapper>(TimeTableMapper.class);
 		factoryBean.setSqlSessionFactory(factory);
 		return factoryBean;
 	}
